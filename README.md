@@ -53,7 +53,8 @@ Each project contains its own source code, configuration files, and build direct
 
 ## License
 
-See individual project folders for license details.
+**Attribution:**
+If you use this project, please credit the author: SudeKun.
 
 ## Contributing
 
