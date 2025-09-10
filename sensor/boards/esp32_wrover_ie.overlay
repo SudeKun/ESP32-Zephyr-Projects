@@ -1,0 +1,23 @@
+#include <zephyr/dt-bindings/pinctrl/esp32-pinctrl.h>
+
+&pinctrl {
+    spi2_adxl357: spi2_adxl357 {
+        group1 {
+            pinmux = <SPIM2_MISO_GPIO12>,    // MISO → GPIO12
+                     <SPIM2_MOSI_GPIO13>,    // MOSI → GPIO13
+                     <SPIM2_SCLK_GPIO14>;    // SCLK → GPIO14
+        };
+    };
+};
+		// Convert to g using 51200 LSB/g
+
+&spi2 {
+    status = "okay";
+    pinctrl-0 = <&spi2_adxl357>;
+    pinctrl-names = "default";
+    cs-gpios = <&gpio0 15 GPIO_ACTIVE_LOW>;
+};
+
+&gpio0 {
+    status = "okay";
+};
