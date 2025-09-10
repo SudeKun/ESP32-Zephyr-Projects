@@ -1,0 +1,2 @@
+First I tried to run regularly but in west.yml there were no enabled library called mbedtls. I enabled from west.yml and updated west. Then Stack sizes were small I added more bytes. Then I changed network as 2.4GHz cause of 5Ghz is not supported.
+https://github.com/craigpeacock/Zephyr_WiFi/tree/main"
