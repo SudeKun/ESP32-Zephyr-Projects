@@ -1,0 +1,16 @@
+mainmenu "Zephyr"
+source "Kconfig.zephyr"
+menu "Shell Configuration"
+config MCUMGR_CMD_SHELL_MGMT
+    bool "Enable mcumgr handlers for shell management"
+    select SHELL_BACKEND_DUMMY
+    depends on SHELL && MCUMGR
+    help
+      Enables mcumgr handlers for shell management. The handler will utilize
+      the dummy backend to execute shell commands and capture the output to
+      an internal memory buffer. This way, there is no interaction with
+      physical interfaces outside of the scope of the user.
+      It is possible to use additional shell backends in coordination
+      with this handler and they will not interfere.
+
+endmenu

@@ -1,0 +1,46 @@
+18.08.2025
+It gives invalid stack pointer. I don't know why, and I couldn't understand where it trying to jump. So I will try to write it with my hands again, it was an sample.
+
+It gives in here calles as:
+[00:00:42.916,000] <err> os: >>> ZEPHYR FATAL ERROR 0: CPU exception on CPU 0
+[00:00:42.916,000] <err> os: Current thread: 0x3fcc8880 (mcumgr smp)
+[00:00:43.042,000] <err> os: Halting system
+
+I don't know how to solve it but i did everything i could. I trace this error by calling:
+xtensa-esp32-elf-addr2line -e /build/zephyr/zephyr.elf 0x3fcc8880
+
+And it gave this answer: 
+static struct k_work_q smp_work_queue;
+
+And I tried to size up of some configs:
+CONFIG_MCUMGR_TRANSPORT_WORKQUEUE_STACK_SIZE=8192
+CONFIG_MCUMGR_TRANSPORT_NETBUF_COUNT=16
+CONFIG_BT_HCI_TX_STACK_SIZE=8192
+
+but it gave no answer, still same error continues.
+
+19.08.2025
+I changed CONFIG_MCUMGR_TRANSPORT_WORKQUEUE_STACK_SIZE to 4096 and BT_LONG_WQ_STACK_SIZE to 8196 in Kconfig (zephyr/subsys/bluetooth/host/Kconfig) and it solved my problem. Now it works.
+
+Also I disabled all LOG_ERR and LOG_INF.
+Changed zephyr/subsys/mgmt/mcumgr/transport/Kconfig.bluetooth menuconfig MCUMGR_TRANSPORT_BT to config MCUMGR_TRANSPORT_BT
+
+PS: ~/.espressif/python_env/idf5.5_py3.13_env/bin$ ./esptool.py
+
+20.08.2025
+So I moved my sensor project into this project and make thread for running smoothly, it prints into uart not shell, I'm gonna fix it.
+
+02.08.2025
+It's done BLE can just one request and answer so i gave it once.
+
+03.08.2025
+I moved to wifi-udp transfer but it gave:
+
+[00:00:40.400,000] <err> os: >>> ZEPHYR FATAL ERROR 0: CPU exception on CPU 0                                                            
+[00:00:40.410,000] <err> os: Current thread: 0x3ffc2820 (rx_q[0])                                                                        
+[00:00:40.419,000] <err> os: Halting system
+
+./~/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-addr2line -e /home/su/Documents/ceng/intern/2024-2025_yaz_staji/esp_project/PROJECT/projects/smp/build/zephyr/zephyr.elf 0
+x3ffc3820
+
+AI told my it can be rx buffer size overflow
