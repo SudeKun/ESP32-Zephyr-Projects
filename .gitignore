@@ -1,0 +1,13 @@
+.venv/
+.vscode/
+external
+**/sample.yaml
+**/build*/
+.vscode/compile_commands.json
+.vscode/extensions.json
+wifi/.gitignore
+wifi/README.md
+mcuboot/hello_world/.gitignore
+sensor/.gitignore
+smp/.gitignore
+*/wrover/
